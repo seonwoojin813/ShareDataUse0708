@@ -3,10 +3,13 @@ package com.tjoeun.smartphonemodule;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -36,6 +39,24 @@ public class SensorListActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.sensorlist);
 
         listView.setAdapter(adapter);
+
+        //리스트 뷰의 항목을 클릭했을 때의 이벤트 처리
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        //하위 액티비티에 해당하는 인텐트를 만들고
+                        //sensorIndex라는 이름으로 선택한 항목의 인덱스를 저장하고
+                        //화면에 출력
+
+                        Intent intent = new Intent(
+                                SensorListActivity.this,
+                                SensorDataActivity.class);
+                        intent.putExtra("sensorIndex",i);
+                        startActivity(intent);
+                    }
+                }
+        );
 
     }
 }
